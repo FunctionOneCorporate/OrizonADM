@@ -1,0 +1,29 @@
+.headerContainer {
+  display: flex;
+  min-height: 5vh;
+  min-width: 100vw;
+  background-color: rgb(23, 105, 255);
+}
+
+.headerTextContainer {
+  margin: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.headerTitle {
+  color: white;
+  border: 0px;
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+.headerText {
+  color: white;
+  border: 0px;
+}
+
+.headerText:hover {
+  color: white;
+  border: 0px;
+}

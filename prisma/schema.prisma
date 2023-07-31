@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model Meeting {
+  MeetingId          String?   @db.VarChar(255)
+  MeetingUrl         String?   @db.VarChar(255)
+  MeetingTitle       String?   @db.VarChar(255)
+  MeetingOrganizerId String?   @db.VarChar(255)
+  MeetingStartDate   DateTime? @db.DateTime
+
+  @@ignore
+}
+
+model MeetingEvent {
+  Id                  BigInt    @id(map: "PK_MeetingEvent") @default(autoincrement())
+  MeetingId           String?   @db.NVarChar(Max)
+  EventType           String?   @db.NVarChar(100)
+  EventDateUtc        String?   @db.NVarChar(50)
+  ParticipantId       String?   @db.NVarChar(100)
+  ParticipantTenantId String?   @db.NVarChar(100)
+  ParticipantUserId   String?   @db.NVarChar(100)
+  ParticipantName     String?   @db.NVarChar(100)
+  InputDateTimeUTC    DateTime? @default(dbgenerated("getutcdate()"), map: "DF__MeetingEv__Input__03F0984C") @db.DateTime
+}
+
+model MeetingHeld {
+  Id           BigInt  @id(map: "PK_MeetingHeld") @default(autoincrement())
+  MeetingId    String? @db.NVarChar(Max)
+  EventType    String? @db.NVarChar(100)
+  EventDateUTC String? @db.NVarChar(50)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model MeetingSubscriptionLog {
+  MeetingUrl       String    @db.NVarChar(Max)
+  SubscriptionId   String    @db.NVarChar(100)
+  LastUpdate       DateTime  @default(dbgenerated("getutcdate()"), map: "DF__MeetingSu__LastU__07C12930") @db.DateTime
+  LastRecievedInfo DateTime? @db.DateTime
+
+  @@ignore
+}
+
+model Question {
+  Id                Int       @id(map: "PK_Question") @default(autoincrement())
+  QuestionCatalogId Int
+  QuestionTitle     String?   @db.NVarChar(Max)
+  InputDateTimeUTC  DateTime? @default(dbgenerated("getutcdate()"), map: "DF__Question__InputD__0A9D95DB") @db.DateTime
+  Choices           String?   @db.NVarChar(Max)
+}
+
+model QuestionAnswer {
+  Id               Int       @id(map: "PK_QuestionAnswer") @default(autoincrement())
+  QuestionId       Int
+  ParticipantId    String    @db.NVarChar(Max)
+  Answer           String?   @db.NVarChar(Max)
+  InputDateTimeUTC DateTime? @default(dbgenerated("getutcdate()"), map: "DF__QuestionA__Input__0D7A0286") @db.DateTime
+}
+
+model QuestionBranching {
+  Id               Int       @id(map: "PK_QuestionBranching") @default(autoincrement())
+  QuestionId       Int
+  AnswerType       String    @db.NVarChar(5)
+  QuestionTitle    String?   @db.NVarChar(Max)
+  InputDateTimeUTC DateTime? @default(dbgenerated("getutcdate()"), map: "DF__QuestionB__Input__367C1819") @db.DateTime
+}
+
+model QuestionBranchingAnswer {
+  Id                  Int       @id(map: "PK_QuestionBranchingAnswer") @default(autoincrement())
+  QuestionBranchingId Int
+  QuestionAnswerId    Int
+  Answer              String?   @db.NVarChar(Max)
+  InputDateTimeUTC    DateTime? @default(dbgenerated("getutcdate()"), map: "DF__QuestionB__Input__395884C4") @db.DateTime
+}
+
+model QuestionCatalog {
+  Id                    Int       @id(map: "PK_QuestionCatalog") @default(autoincrement())
+  CatalogName           String?   @db.NVarChar(Max)
+  Description           String?   @db.NVarChar(Max)
+  Status                String?   @db.NVarChar(1)
+  StartDateTimeUTC      DateTime  @db.DateTime
+  InputDateTimeUTC      DateTime? @default(dbgenerated("getutcdate()"), map: "DF__tmp_ms_xx__Input__339FAB6E") @db.DateTime
+  MinParticipantsToSend Int?
+}
+
+model SubscriptionMeeting {
+  Id                      String    @id(map: "SubscriptionMeeting_PK") @default(dbgenerated("newid()"), map: "DF__Subscription__Id__17036CC0") @db.UniqueIdentifier
+  SubscriptionId          String?   @db.VarChar(128)
+  Organizer               String    @db.VarChar(128)
+  MeetingId               String    @db.VarChar(256)
+  MeetingJoinUrl          String    @db.VarChar(1024)
+  MeetingTitle            String    @db.VarChar(256)
+  MeetingStart            DateTime? @db.DateTimeOffset
+  MeetingEnd              DateTime? @db.DateTimeOffset
+  CreatedAt               DateTime  @default(dbgenerated("sysutcdatetime()"), map: "DF__Subscript__Creat__17F790F9") @db.DateTime
+  FinishedAt              DateTime? @db.DateTime
+  SubscriptionCreateError String?   @db.VarChar(Max)
+  MeetingResourceUrl      String    @db.VarChar(Max)
+}
+
+model UserConversation {
+  UserId            String    @id(map: "UserConversation_PK") @db.UniqueIdentifier
+  UserPrincipalName String?   @db.VarChar(256)
+  ConversationId    String    @db.VarChar(256)
+  ConversationBotId String    @db.VarChar(256)
+  ServiceUrl        String    @db.VarChar(256)
+  CreatedAt         DateTime  @default(dbgenerated("sysdatetimeoffset()"), map: "DF__UserConve__Creat__1332DBDC") @db.DateTimeOffset
+  UpdatedAt         DateTime  @default(dbgenerated("sysdatetimeoffset()"), map: "DF__UserConve__Updat__14270015") @db.DateTimeOffset
+  LastSentEvent     DateTime? @db.DateTimeOffset
+  DontSendToThis    Boolean   @default(false, map: "DF__UserConve__DontS__4D5F7D71")
+  SendOnlyToThis    Boolean   @default(false, map: "DF__UserConve__SendO__4E53A1AA")
+}

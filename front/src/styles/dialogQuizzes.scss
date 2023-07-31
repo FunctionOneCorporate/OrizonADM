@@ -1,0 +1,29 @@
+.questionsContainer {
+  overflow: hidden;
+  height: 95vh;
+  //width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin-left: 5%;
+}
+
+.quizSelection {
+  margin-left: 5%;
+  width: 100vw;
+}
+
+.quizDropdown {
+  width: 80vw;
+  margin-right: 1vw;
+}
+
+.table {
+  margin: auto;
+}
+
+.tableCell {
+  text-align: center !important;
+}

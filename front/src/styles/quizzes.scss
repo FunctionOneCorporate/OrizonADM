@@ -1,0 +1,43 @@
+.questionsContainer {
+  overflow: hidden;
+  height: 95vh;
+  //width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin-left: 5%;
+}
+
+.quizSelection {
+  margin-left: 5%;
+  width: 100vw;
+}
+
+.questionSelection {
+  margin-left: 5%;
+  width: 80vw;
+}
+
+.quizDropdown {
+  width: 80vw;
+  margin-right: 1vw;
+}
+
+.tableQuestions {
+  margin: auto;
+}
+
+.tableCellQuestions {
+  text-align: left !important;
+  margin-right: 1vw;
+}
+
+.tableCellQuestionsIcon {
+  text-align: right !important;
+}
+
+.questionIcons {
+  margin-right: 2vw !important;
+}

@@ -1,0 +1,48 @@
+.participantsContainer {
+  overflow: hidden;
+  height: 95vh;
+  //width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin-left: 5%;
+}
+
+.participantSelection {
+  margin-left: 5%;
+  width: 80vw;
+}
+
+.participantSearch {
+  //margin-left: 5%;
+  width: 80vw;
+}
+
+.participantDropdown {
+  margin-left: 5%;
+  width: 80vw;
+  margin-right: 1vw;
+}
+
+.tableParticipants {
+  margin: auto;
+}
+
+.tableCellParticipants {
+  text-align: left !important;
+  margin-right: 1vw;
+}
+
+.tableCellParticipantsIcon {
+  text-align: right !important;
+}
+
+.tableCellParticipantsIconCenter {
+  text-align: center !important;
+}
+
+.participantIcons {
+  margin-right: 2vw !important;
+}
