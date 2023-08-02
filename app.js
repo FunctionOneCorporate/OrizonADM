@@ -8,11 +8,9 @@ require('dotenv').config();
 var path = require('path');
 var express = require('express');
 var session = require('express-session');
-var createError = require('http-errors');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
 var questionsRouter = require('./routes/question');
@@ -23,7 +21,7 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 
 // initialize express
 var app = express();
-console.log(process.env.DATABASE_URL)
+
 /**
  * Using express-session middleware for persistent user session. Be sure to
  * familiarize yourself with available options. Visit: https://www.npmjs.com/package/express-session
@@ -99,7 +97,7 @@ if (process.env.APP_CONFIG_APP_URL && process.env.APP_CONFIG_APP_URL !== process
 
 } else {
     app.use(
-        /^\/?api/,
+        /^(?!\/?api)/,
         express.static(path.join(__dirname, 'front', 'dist')),
         (req, res) => res.sendFile(path.join(__dirname, 'front', 'dist', 'index.html'))
     );
