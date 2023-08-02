@@ -19,7 +19,7 @@ var questionsRouter = require('./routes/question');
 var questionCatalogRouter = require('./routes/questionCatalog');
 var questionBranching = require('./routes/questionBranching');
 var userConversation = require('./routes/userConversation');
-const {createProxyMiddleware} = require("http-proxy-middleware");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
 // initialize express
 var app = express();
@@ -97,6 +97,12 @@ if (process.env.APP_CONFIG_APP_URL && process.env.APP_CONFIG_APP_URL !== process
 
     app.use(frontProxy);
 
+} else {
+    app.use(
+        /^\/?api/,
+        express.static(path.join(__dirname, 'front', 'dist')),
+        (req, res) => res.sendFile(path.join(__dirname, 'front', 'dist', 'index.html'))
+    );
 }
 
 module.exports = app;
