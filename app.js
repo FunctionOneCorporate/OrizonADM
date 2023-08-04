@@ -22,6 +22,8 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 // initialize express
 var app = express();
 
+var FileStore = require('session-file-store')(session);
+
 /**
  * Using express-session middleware for persistent user session. Be sure to
  * familiarize yourself with available options. Visit: https://www.npmjs.com/package/express-session
@@ -33,7 +35,8 @@ app.use(session({
     cookie: {
         httpOnly: true,
         secure: false, // set this to true on production
-    }
+    },
+    store: process.env.NODE_ENV === "production" ? undefined : new FileStore()
 }));
 
 // view engine setup
@@ -63,6 +66,7 @@ app.use('/questions', questionsRouter);
 app.use('/questionCatalog', questionCatalogRouter);
 app.use('/questionBranching', questionBranching);
 app.use('/userConversation', userConversation);
+app.use('/api/configs', require("./routes/configs"));
 app.use(express.static(path.join(__dirname, 'public')));
 
 module.exports = app;
