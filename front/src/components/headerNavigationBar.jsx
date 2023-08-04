@@ -1,9 +1,9 @@
 import "../styles/headerNavigationBar.scss"
-import { Button } from "@fluentui/react-components";
+
 const HeaderNavigationBar = () => {
 
     return (
-        <div className={"headerContainer"}>
+        <header className={"headerContainer"}>
             <div className={"headerTextContainer"}>
                 <a className={"headerTitle"} href={"/"}>Orizon-Meeting </a>
             </div>
@@ -13,8 +13,7 @@ const HeaderNavigationBar = () => {
             <div className={"headerTextContainer"}>
                 <a className={"headerText"} href={"/participants"}> Participantes </a>
             </div>
-
-        </div>
+        </header>
     )
 }
 

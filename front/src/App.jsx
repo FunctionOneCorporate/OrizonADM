@@ -1,6 +1,7 @@
-import {useEffect, useState} from 'react'
+import "./App.scss";
+import { useEffect, useState } from 'react'
 import axios from "axios";
-import {api} from "./services/api";
+import { api } from "./services/api";
 import {
     FluentProvider,
     webLightTheme,
@@ -32,7 +33,7 @@ function App() {
         await api
             .get("questions/all")
             .then((response) => {
-                console.log({response})
+                console.log({ response })
             })
             .catch((e) => {
                 return e;
@@ -52,16 +53,18 @@ function App() {
             theme={webLightTheme}
             style={{ background: tokens.colorNeutralBackground3 }}
         >
-            <HeaderNavigationBar/>
-            <Router>
-                <Routes>
-                    <Route path={"/"} element={<PaginaInicial/>}/>
-                    <Route path={"/questions"} element={<Questionarios/>}/>
-                    <Route path={"/participants"} element={<Participantes/>}/>
-                </Routes>
-            </Router>
-
-
+            <div id="app">
+                <HeaderNavigationBar />
+                <main>
+                    <Router>
+                        <Routes>
+                            <Route path={"/"} element={<PaginaInicial />} />
+                            <Route path={"/questions"} element={<Questionarios />} />
+                            <Route path={"/participants"} element={<Participantes />} />
+                        </Routes>
+                    </Router>
+                </main>
+            </div>
         </FluentProvider>
     )
 }
