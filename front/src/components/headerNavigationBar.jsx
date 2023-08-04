@@ -14,6 +14,9 @@ const HeaderNavigationBar = () => {
             <div className={"headerTextContainer"}>
                 <Link className={"headerText"} to={"/participants"}> Participantes </Link>
             </div>
+            <div className={"headerTextContainer"}>
+                <Link className={"headerText"} to={"/configs"}> Configurações </Link>
+            </div>
         </header>
     )
 }

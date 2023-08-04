@@ -14,6 +14,7 @@ import PaginaInicial from "./pages/paginaInicial";
 import Questionarios from "./pages/quizzes";
 import Participantes from "./pages/participants";
 import HeaderNavigationBar from "./components/headerNavigationBar";
+import Configs from "./pages/configs";
 
 function App() {
 
@@ -61,7 +62,7 @@ function App() {
                             <Route path={"/"} element={<PaginaInicial />} />
                             <Route path={"/questions"} element={<Questionarios />} />
                             <Route path={"/participants"} element={<Participantes />} />
-                            <Route path={"/configs"} element={<Participantes />} />
+                            <Route path={"/configs"} element={<Configs />} />
                         </Routes>
                     </main>
                 </div>
