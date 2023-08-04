@@ -65,42 +65,4 @@ app.use('/questionBranching', questionBranching);
 app.use('/userConversation', userConversation);
 app.use(express.static(path.join(__dirname, 'public')));
 
-// // catch 404 and forward to error handler
-// app.use(function (req, res, next) {
-//     next(createError(404));
-// });
-//
-// // error handler
-// app.use(function (err, req, res, next) {
-//     // set locals, only providing error in development
-//     res.locals.message = err.message;
-//     res.locals.error = req.app.get('env') === 'development' ? err : {};
-//
-//     // render the error page
-//     res.status(err.status || 500);
-//     res.render('error');
-// });
-
-if (process.env.APP_CONFIG_APP_URL && process.env.APP_CONFIG_APP_URL !== process.env.APP_HOST) {
-
-    const frontProxy = createProxyMiddleware({
-
-        target: process.env.APP_CONFIG_APP_URL,
-
-        changeOrigin: true,
-
-        ws: true,
-
-    });
-
-    app.use(frontProxy);
-
-} else {
-    app.use(
-        /^(?!\/?api)/,
-        express.static(path.join(__dirname, 'front', 'dist')),
-        (req, res) => res.sendFile(path.join(__dirname, 'front', 'dist', 'index.html'))
-    );
-}
-
 module.exports = app;

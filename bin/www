@@ -7,6 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('expresswebapp:server');
 var http = require('http');
+const { resolve } = require('path');
+var ViteExpress = require('vite-express');
 
 /**
  * Get port from environment and store in Express.
@@ -20,6 +22,14 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+
+ViteExpress.config({
+  inlineViteConfig: {
+      root: resolve(__dirname, "..", "front"),
+      build: { outDir: "dist" }
+  }
+});
+ViteExpress.bind(app, server);
 
 /**
  * Listen on provided port, on all network interfaces.
