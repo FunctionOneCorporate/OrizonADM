@@ -121,20 +121,14 @@ model SubscriptionMeetingUserParticipation {
   UserTenantId          String?   @db.UniqueIdentifier
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model UserValidDomains {
-  EmailDomain String    @db.VarChar(256)
+  EmailDomain String    @id(map: "UserValidDomains_PK") @db.VarChar(256)
   CreatedAt   DateTime  @default(dbgenerated("sysdatetimeoffset()"), map: "DF__UserValid__Creat__625A9A57") @db.DateTimeOffset
   DeletedAt   DateTime? @db.DateTimeOffset
-
-  @@ignore
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model UserValidTenants {
-  TenantId  String    @db.UniqueIdentifier
+  TenantId  String    @id(map: "UserValidTenants_PK") @db.UniqueIdentifier
   CreatedAt DateTime  @default(dbgenerated("sysdatetimeoffset()"), map: "DF__UserValid__Creat__65370702") @db.DateTimeOffset
   DeletedAt DateTime? @db.DateTimeOffset
-
-  @@ignore
 }
