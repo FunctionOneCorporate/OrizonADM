@@ -122,6 +122,10 @@ class AuthProvider {
 
     handleRedirect(options = {}) {
         return async (req, res, next) => {
+            if (!req.session.pkceCodes) {
+                res.redirect('/auth/login');
+                return;
+            }
             if (!req.body || !req.body.state) {
                 return next(new Error('Error: response not found'));
             }
