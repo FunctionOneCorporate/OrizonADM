@@ -112,7 +112,7 @@ const Questionarios = () => {
                                 <TableCell className={"tableCellQuestionsIcon"}>
                                     <EditQuestion Id={item.Id} questions={questions} setQuestions={setQuestions} refreshQuestions={refreshQuestions} setRefreshQuestions={setRefreshQuestions}/>
                                     <DeleteQuestion Id={item.Id} questions={questions} setQuestions={setQuestions} refreshQuestions={refreshQuestions} setRefreshQuestions={setRefreshQuestions}/>
-                                    <DialogQuestionRamification Id={item.Id} question={item} refreshQuestions={refreshQuestions} setRefreshQuestions={setRefreshQuestions}/>
+                                    {/*<DialogQuestionRamification Id={item.Id} question={item} refreshQuestions={refreshQuestions} setRefreshQuestions={setRefreshQuestions}/>*/}
                                 </TableCell>
                             </TableRow>
 

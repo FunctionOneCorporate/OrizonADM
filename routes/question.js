@@ -38,6 +38,7 @@ router.post('/', async (req, res) => {
                     QuestionTitle: req.body.QuestionTitle ? req.body.QuestionTitle : null,
                     QuestionCatalogId: req.body.QuestionCatalogId ? parseInt(req.body.QuestionCatalogId) : null,
                     InputDateTimeUTC: new Date(),
+                    Choices: req.body.Choices ? req.body.Choices : null
                 },
             })
             return res.status(200).json(question)
@@ -70,6 +71,7 @@ router.patch('/:id', async (req, res) => {
             where: {Id: parseInt(id)},
             data: {
                 QuestionTitle: req.body.QuestionTitle,
+                Choices: req.body.Choices
             }
         })
         return res.status(200).json(question)

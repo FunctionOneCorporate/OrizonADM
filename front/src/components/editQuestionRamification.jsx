@@ -73,7 +73,6 @@ const EditQuestionRamification = (props) => {
                             />
                         </Field>
                         <br/>
-                        <div>Current Value: {response.AnswerType}</div>
                     </div>
 
                     <DialogActions>

@@ -20,6 +20,7 @@ router.get('/all',
 router.post('/', async (req, res) => {
     try {
         if (req.body) {
+            console.log(req.body)
             const questionCatalog = await prismaClient.questionCatalog.create({
                 data: {
                     CatalogName: req.body.CatalogName ? req.body.CatalogName : null,
@@ -27,13 +28,16 @@ router.post('/', async (req, res) => {
                     InputDateTimeUTC: new Date(),
                     MinParticipantsToSend: req.body.MinParticipantsToSend ? parseInt(req.body.MinParticipantsToSend) : null,
                     StartDateTimeUTC: req.body.StartDateTimeUTC ? req.body.StartDateTimeUTC : new Date(),
-                    Status: "A"
+                    Status: "A",
+                    IsAnonymous: req.body.IsAnonymous === "true",
+                    IgnoreWhenHasExternals: req.body.IgnoreWhenHasExternals === "true"
                 },
             })
             return res.status(200).json(questionCatalog)
         }
 
     } catch (error) {
+        console.log({error})
         return res.status(400).json({message: error.message})
     }
 })
@@ -64,7 +68,9 @@ router.patch('/:id', async (req, res) => {
                 InputDateTimeUTC: new Date(),
                 MinParticipantsToSend: parseInt(req.body.MinParticipantsToSend),
                 StartDateTimeUTC: req.body.StartDateTimeUTC,
-                Status: req.body.Status
+                Status: req.body.Status,
+                IsAnonymous: req.body.IsAnonymous === "true",
+                IgnoreWhenHasExternals: req.body.IgnoreWhenHasExternals === "true"
             }
         })
         return res.status(200).json(questionCatalog)

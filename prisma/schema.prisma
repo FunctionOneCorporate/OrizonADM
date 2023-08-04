@@ -37,16 +37,6 @@ model MeetingHeld {
   EventDateUTC String? @db.NVarChar(50)
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model MeetingSubscriptionLog {
-  MeetingUrl       String    @db.NVarChar(Max)
-  SubscriptionId   String    @db.NVarChar(100)
-  LastUpdate       DateTime  @default(dbgenerated("getutcdate()"), map: "DF__MeetingSu__LastU__07C12930") @db.DateTime
-  LastRecievedInfo DateTime? @db.DateTime
-
-  @@ignore
-}
-
 model Question {
   Id                Int       @id(map: "PK_Question") @default(autoincrement())
   QuestionCatalogId Int
@@ -58,7 +48,7 @@ model Question {
 model QuestionAnswer {
   Id               Int       @id(map: "PK_QuestionAnswer") @default(autoincrement())
   QuestionId       Int
-  ParticipantId    String    @db.NVarChar(Max)
+  ParticipantId    String?   @db.NVarChar(Max)
   Answer           String?   @db.NVarChar(Max)
   InputDateTimeUTC DateTime? @default(dbgenerated("getutcdate()"), map: "DF__QuestionA__Input__0D7A0286") @db.DateTime
 }
@@ -80,13 +70,15 @@ model QuestionBranchingAnswer {
 }
 
 model QuestionCatalog {
-  Id                    Int       @id(map: "PK_QuestionCatalog") @default(autoincrement())
-  CatalogName           String?   @db.NVarChar(Max)
-  Description           String?   @db.NVarChar(Max)
-  Status                String?   @db.NVarChar(1)
-  StartDateTimeUTC      DateTime  @db.DateTime
-  InputDateTimeUTC      DateTime? @default(dbgenerated("getutcdate()"), map: "DF__tmp_ms_xx__Input__339FAB6E") @db.DateTime
-  MinParticipantsToSend Int?
+  Id                     Int       @id(map: "PK_QuestionCatalog") @default(autoincrement())
+  CatalogName            String?   @db.NVarChar(Max)
+  Description            String?   @db.NVarChar(Max)
+  Status                 String?   @db.NVarChar(1)
+  StartDateTimeUTC       DateTime  @db.DateTime
+  InputDateTimeUTC       DateTime? @default(dbgenerated("getutcdate()"), map: "DF__tmp_ms_xx__Input__339FAB6E") @db.DateTime
+  MinParticipantsToSend  Int?
+  IsAnonymous            Boolean   @default(false, map: "DF__QuestionC__IsAno__540C7B00")
+  IgnoreWhenHasExternals Boolean   @default(true, map: "DF__QuestionC__Ignor__662B2B3B")
 }
 
 model SubscriptionMeeting {
@@ -102,6 +94,7 @@ model SubscriptionMeeting {
   FinishedAt              DateTime? @db.DateTime
   SubscriptionCreateError String?   @db.VarChar(Max)
   MeetingResourceUrl      String    @db.VarChar(Max)
+  MeetingAttendees        String?   @db.VarChar(Max)
 }
 
 model UserConversation {
@@ -115,4 +108,33 @@ model UserConversation {
   LastSentEvent     DateTime? @db.DateTimeOffset
   DontSendToThis    Boolean   @default(false, map: "DF__UserConve__DontS__4D5F7D71")
   SendOnlyToThis    Boolean   @default(false, map: "DF__UserConve__SendO__4E53A1AA")
+}
+
+model SubscriptionMeetingUserParticipation {
+  Id                    String    @id(map: "SubscriptionMeetingUserParticipation_PK") @default(dbgenerated("newid()"), map: "DF__Subscription__Id__5BAD9CC8") @db.UniqueIdentifier
+  SubscriptionMeetingId String    @db.UniqueIdentifier
+  UserId                String    @db.UniqueIdentifier
+  UserParticipationId   String    @db.UniqueIdentifier
+  EnteredAt             DateTime? @db.DateTimeOffset
+  ExitedAt              DateTime? @db.DateTimeOffset
+  SendedAt              DateTime? @db.DateTimeOffset
+  UserTenantId          String?   @db.UniqueIdentifier
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model UserValidDomains {
+  EmailDomain String    @db.VarChar(256)
+  CreatedAt   DateTime  @default(dbgenerated("sysdatetimeoffset()"), map: "DF__UserValid__Creat__625A9A57") @db.DateTimeOffset
+  DeletedAt   DateTime? @db.DateTimeOffset
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model UserValidTenants {
+  TenantId  String    @db.UniqueIdentifier
+  CreatedAt DateTime  @default(dbgenerated("sysdatetimeoffset()"), map: "DF__UserValid__Creat__65370702") @db.DateTimeOffset
+  DeletedAt DateTime? @db.DateTimeOffset
+
+  @@ignore
 }

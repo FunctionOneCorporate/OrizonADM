@@ -19,6 +19,7 @@ const DialogQuizzes = (props) => {
         {columnKey: "CatalogName", label: "Nome"},
         {columnKey: "StartDateTimeUTC", label: "Início"},
         {columnKey: "Status", label: "Situação"},
+        // {columnKey: "IsAnonymous", label: "Anônimo"},
         {columnKey: "Action", label: ""},
     ];
     const sortedQuizzesByDate = props.quizzes.sort((a,b) => new Date(b.StartDateTimeUTC).getTime() - new Date(a.StartDateTimeUTC).getTime())
@@ -68,6 +69,9 @@ const DialogQuizzes = (props) => {
                                         <TableCell style={item.Status === "A" && item.Id === sortedQuizzesByDate[0].Id ? {background: "#3fb618", color: "white"} : {}} className={"tableCell"}>
                                             {item.Status === "A" && item.Id === sortedQuizzesByDate[0].Id ? "Ativo" : "Inativo"}
                                         </TableCell>
+                                        {/*<TableCell as={"div"} className={"tableCell"}>*/}
+                                        {/*    {item.IsAnonymous}*/}
+                                        {/*</TableCell>*/}
                                         <TableCell className={"tableCell"}>
                                             <EditQuiz Id={item.Id} quizzes={props.quizzes} setQuizzes={props.setQuizzes} refresh={props.refresh} setRefresh={props.setRefresh}/>
                                             <DeleteQuiz Id={item.Id} quizzes={props.quizzes} setQuizzes={props.setQuizzes} refresh={props.refresh} setRefresh={props.setRefresh}/>

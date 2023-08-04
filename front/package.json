@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fluentui/react-components": "^9.26.2",
+    "@fluentui/react-components": "^9.27.3",
     "@fluentui/react-datepicker-compat": "^0.2.1",
     "axios": "^1.4.0",
     "dotenv": "^10.0.0",

@@ -5,7 +5,7 @@ import {
     DialogBody,
     DialogSurface,
     DialogTitle,
-    DialogTrigger, Field, Input
+    DialogTrigger, Field, Input, Radio, RadioGroup
 } from "@fluentui/react-components";
 import {Add20Filled, Dismiss20Regular, Edit20Filled} from "@fluentui/react-icons";
 import {api} from "../services/api";
@@ -79,6 +79,24 @@ const EditQuiz = (props) => {
                                    })}/>
                         </Field>
                         <br/>
+                        <Field label={"Questionário anônimo?"} className={"formInput"}>
+                            <RadioGroup layout={"horizontal"}
+                                        value={response.IsAnonymous.toString()}
+                                        onChange={(ev, data) => setResponse({...response, IsAnonymous: data.value})}
+                            >
+                                <Radio value={"true"} label={"Sim"}/>
+                                <Radio value={"false"} label={"Não"}/>
+                            </RadioGroup>
+                        </Field>
+                        <Field label={"Ignorar usuários externos?"} className={"formInput"}>
+                            <RadioGroup layout={"horizontal"}
+                                        value={response.IgnoreWhenHasExternals.toString()}
+                                        onChange={(ev, data) => setResponse({...response, IgnoreWhenHasExternals: data.value})}
+                            >
+                                <Radio value={"true"} label={"Sim"}/>
+                                <Radio value={"false"} label={"Não"}/>
+                            </RadioGroup>
+                        </Field>
                     </div>
                     <DialogActions>
                         <DialogTrigger disableButtonEnhancement>

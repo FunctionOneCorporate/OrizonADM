@@ -1,11 +1,11 @@
 import {
-    Button,
+    Button, Checkbox,
     Dialog,
     DialogActions,
     DialogBody,
     DialogSurface,
     DialogTitle,
-    DialogTrigger, Field, Input
+    DialogTrigger, Field, Input, Radio, RadioGroup
 } from "@fluentui/react-components";
 import {DatePicker} from "@fluentui/react-datepicker-compat";
 import {Add20Filled, Dismiss20Regular} from "@fluentui/react-icons";
@@ -19,7 +19,9 @@ const AddQuiz = (props) => {
         CatalogName: "",
         Description: "",
         StartDateTimeUTC: "",
-        MinParticipantsToSend: ""
+        MinParticipantsToSend: "",
+        IsAnonymous: "false",
+        IgnoreWhenHasExternals: "false"
     })
     const navigate = useNavigate();
     const goTo = (url) => {
@@ -88,6 +90,24 @@ const AddQuiz = (props) => {
                                        ...response,
                                        MinParticipantsToSend: data.value
                                    })}/>
+                        </Field>
+                        <Field label={"Questionário anônimo?"} className={"formInput"}>
+                            <RadioGroup layout={"horizontal"}
+                                        value={response.IsAnonymous.toString()}
+                                        onChange={(ev, data) => setResponse({...response, IsAnonymous: data.value})}
+                            >
+                                <Radio value={"true"} label={"Sim"}/>
+                                <Radio value={"false"} label={"Não"}/>
+                            </RadioGroup>
+                        </Field>
+                        <Field label={"Ignorar usuários externos?"} className={"formInput"}>
+                            <RadioGroup layout={"horizontal"}
+                                        value={response.IgnoreWhenHasExternals.toString()}
+                                        onChange={(ev, data) => setResponse({...response, IgnoreWhenHasExternals: data.value})}
+                            >
+                                <Radio value={"true"} label={"Sim"}/>
+                                <Radio value={"false"} label={"Não"}/>
+                            </RadioGroup>
                         </Field>
                         <br/>
                     </div>
