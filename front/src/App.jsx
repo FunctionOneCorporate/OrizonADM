@@ -49,23 +49,24 @@ function App() {
 
 
     return (
-        <FluentProvider
-            theme={webLightTheme}
-            style={{ background: tokens.colorNeutralBackground3 }}
-        >
-            <div id="app">
-                <HeaderNavigationBar />
-                <main>
-                    <Router>
+        <Router>
+            <FluentProvider
+                theme={webLightTheme}
+                style={{ background: tokens.colorNeutralBackground3 }}
+            >
+                <div id="app">
+                    <HeaderNavigationBar />
+                    <main>
                         <Routes>
                             <Route path={"/"} element={<PaginaInicial />} />
                             <Route path={"/questions"} element={<Questionarios />} />
                             <Route path={"/participants"} element={<Participantes />} />
+                            <Route path={"/configs"} element={<Participantes />} />
                         </Routes>
-                    </Router>
-                </main>
-            </div>
-        </FluentProvider>
+                    </main>
+                </div>
+            </FluentProvider>
+        </Router>
     )
 }
 

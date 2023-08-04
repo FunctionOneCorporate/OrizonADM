@@ -1,17 +1,18 @@
 import "../styles/headerNavigationBar.scss"
+import { Link } from "react-router-dom";
 
 const HeaderNavigationBar = () => {
 
     return (
         <header className={"headerContainer"}>
             <div className={"headerTextContainer"}>
-                <a className={"headerTitle"} href={"/"}>Orizon-Meeting </a>
+                <Link className={"headerTitle"} to={"/"}>Orizon-Meeting </Link>
             </div>
             <div className={"headerTextContainer"}>
-                <a className={"headerText"} href={"/questions"}> Questionários </a>
+                <Link className={"headerText"} to={"/questions"}> Questionários </Link>
             </div>
             <div className={"headerTextContainer"}>
-                <a className={"headerText"} href={"/participants"}> Participantes </a>
+                <Link className={"headerText"} to={"/participants"}> Participantes </Link>
             </div>
         </header>
     )
