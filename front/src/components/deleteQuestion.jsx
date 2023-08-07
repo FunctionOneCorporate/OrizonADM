@@ -7,8 +7,8 @@ import {
     DialogTitle,
     DialogTrigger
 } from "@fluentui/react-components";
-import {Add20Filled, Delete20Filled, Dismiss20Regular, Edit20Filled} from "@fluentui/react-icons";
-import {api} from "../services/api";
+import { Delete20Filled, Dismiss20Regular } from "@fluentui/react-icons";
+import { api } from "~/services/api";
 
 
 const DeleteQuestion = (props) => {
@@ -19,7 +19,7 @@ const DeleteQuestion = (props) => {
             .then((response) => {
                 // props.setQuestions(oldArray => [...oldArray, response.data])
                 props.setRefreshQuestions(!props.refreshQuestions)
-                console.log({response})
+                console.log({ response })
             })
             .catch((e) => {
                 return e;
@@ -29,7 +29,7 @@ const DeleteQuestion = (props) => {
     return (
         <Dialog>
             <DialogTrigger>
-                <Button disableButtonEnhancement appearance={"primary"} icon={<Delete20Filled/>} style={{marginRight: "1vw"}}/>
+                <Button disableButtonEnhancement appearance={"primary"} icon={<Delete20Filled />} style={{ marginRight: "1vw" }} />
             </DialogTrigger>
             <DialogSurface>
                 <DialogBody>
@@ -38,7 +38,7 @@ const DeleteQuestion = (props) => {
                             <Button
                                 appearance="subtle"
                                 aria-label="close"
-                                icon={<Dismiss20Regular/>}
+                                icon={<Dismiss20Regular />}
                             />
                         </DialogTrigger>
                     }>

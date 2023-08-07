@@ -1,9 +1,9 @@
 import { Badge, Input } from "@fluentui/react-components";
-import "../styles/headerNavigationBar.scss";
+import "~/styles/headerNavigationBar.scss";
 import * as PropTypes from "prop-types";
 import { useCallback, useMemo, useState } from "react";
 import { DismissRegular } from "@fluentui/react-icons";
-import * as styles from "../styles/listInput.module.scss";
+import * as styles from "~/styles/listInput.module.scss";
 
 /** @type {React.FC<Omit<import("@fluentui/react-components").InputProps, 'value' | 'onChange'> & { value: string[], onChange: (ev?: React.ChangeEvent<HTMLInputElement>, data: { value: string[] }) => void }>} */
 const ListInput = (props) => {

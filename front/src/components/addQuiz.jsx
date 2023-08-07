@@ -9,9 +9,9 @@ import {
 } from "@fluentui/react-components";
 import {DatePicker} from "@fluentui/react-datepicker-compat";
 import {Add20Filled, Dismiss20Regular} from "@fluentui/react-icons";
-import "../styles/addQuiz.scss"
+import "~/styles/addQuiz.scss"
 import {useState} from "react";
-import {api} from "../services/api";
+import {api} from "~/services/api";
 import {useNavigate} from 'react-router-dom';
 
 const AddQuiz = (props) => {

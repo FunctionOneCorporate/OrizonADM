@@ -1,19 +1,19 @@
-import "../styles/quizzes.scss"
+import "~/styles/quizzes.scss"
 import {
     Dropdown,
     Option,
     Divider, Table, TableHeader, TableRow, TableHeaderCell, TableBody, TableCell
 } from "@fluentui/react-components";
-import {api} from "../services/api";
+import {api} from "~/services/api";
 import {useEffect, useState} from "react";
-import DialogQuizzes from "../components/dialogQuizzes";
-import AddQuiz from "../components/addQuiz";
-import EditQuiz from "../components/editQuiz";
-import DeleteQuiz from "../components/deleteQuiz";
-import AddQuestion from "../components/addQuestion";
-import DeleteQuestion from "../components/deleteQuestion";
-import EditQuestion from "../components/editQuestion";
-import DialogQuestionRamification from "../components/dialogQuestionRamification";
+import DialogQuizzes from "~/components/dialogQuizzes";
+import AddQuiz from "~/components/addQuiz";
+import EditQuiz from "~/components/editQuiz";
+import DeleteQuiz from "~/components/deleteQuiz";
+import AddQuestion from "~/components/addQuestion";
+import DeleteQuestion from "~/components/deleteQuestion";
+import EditQuestion from "~/components/editQuestion";
+import DialogQuestionRamification from "~/components/dialogQuestionRamification";
 
 
 const Questionarios = () => {

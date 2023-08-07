@@ -8,9 +8,9 @@ import {
     DialogTrigger, Field, Input, Radio, RadioGroup, Textarea
 } from "@fluentui/react-components";
 import {Add20Filled, Dismiss20Regular} from "@fluentui/react-icons";
-import "../styles/addQuestionRamification.scss"
+import "~/styles/addQuestionRamification.scss"
 import {useState} from "react";
-import {api} from "../services/api";
+import {api} from "~/services/api";
 
 const AddQuestionRamification = (props) => {
     const [response, setResponse] = useState({QuestionId: "", QuestionTitle: "", AnswerType: "S"})

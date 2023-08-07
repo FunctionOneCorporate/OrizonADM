@@ -8,7 +8,7 @@ import {
     DialogTrigger, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow
 } from "@fluentui/react-components";
 import {Add20Filled, AppsList20Filled, Delete20Filled, Dismiss20Regular, Edit20Filled} from "@fluentui/react-icons";
-import "../styles/dialogQuizzes.scss"
+import "~/styles/dialogQuizzes.scss"
 import AddQuiz from "./addQuiz";
 import EditQuiz from "./editQuiz";
 import DeleteQuiz from "./deleteQuiz";

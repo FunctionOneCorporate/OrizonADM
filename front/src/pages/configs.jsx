@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import { Button, Field, Spinner } from "@fluentui/react-components";
 import { Alert } from "@fluentui/react-components/unstable";
-import { api } from "../services/api";
-import ListInput from "../components/listInput";
+import { api } from "~/services/api";
+import ListInput from "~/components/listInput.jsx";
 
-import * as styles from "../styles/pages.configs.module.scss";
+import * as styles from "~/styles/pages.configs.module.scss";
 
 const Configs = () => {
 
     /** @type {ReturnType<typeof useState<{ domains: string[], tenants: string[] }>>} */
     const [configs, setConfigs] = useState();
 
-    /** @type {ReturnType<typeof useState<{ domains: string[], tenants: string[] }>>} */
+    /** @type {ReturnType<typeof useState<Error>>} */
     const [error, setError] = useState();
 
     useEffect(() => {

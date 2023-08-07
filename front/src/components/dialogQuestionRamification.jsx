@@ -8,9 +8,9 @@ import {
     DialogTrigger, Field, Input, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow, Textarea
 } from "@fluentui/react-components";
 import {BranchFork20Regular, Dismiss20Regular} from "@fluentui/react-icons";
-import "../styles/dialogQuestionRamification.scss"
+import "~/styles/dialogQuestionRamification.scss"
 import {useEffect, useState} from "react";
-import {api} from "../services/api";
+import {api} from "~/services/api";
 import AddQuestionRamification from "./addQuestionRamification";
 import EditQuiz from "./editQuiz";
 import DeleteQuiz from "./deleteQuiz";

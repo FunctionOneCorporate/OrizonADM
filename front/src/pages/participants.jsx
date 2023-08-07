@@ -1,4 +1,4 @@
-import "../styles/participants.scss"
+import "~/styles/participants.scss"
 import {
     Button,
     Divider,
@@ -17,11 +17,8 @@ import {
     Search20Regular
 } from "@fluentui/react-icons";
 import {useEffect, useState} from "react";
-import {api} from "../services/api";
-import EditQuestion from "../components/editQuestion";
-import DeleteQuestion from "../components/deleteQuestion";
-import DialogQuestionRamification from "../components/dialogQuestionRamification";
-import EditUser from "../components/editUser";
+import {api} from "~/services/api";
+import EditUser from "~/components/editUser";
 
 const Participantes = () => {
 

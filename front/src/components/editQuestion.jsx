@@ -9,10 +9,10 @@ import {
     DialogTrigger, Field, Input, Radio, RadioGroup, Textarea
 } from "@fluentui/react-components";
 import {Add20Filled, Dismiss16Regular, Dismiss20Regular, Edit20Filled} from "@fluentui/react-icons";
-import {api} from "../services/api";
+import {api} from "~/services/api";
 import {useEffect, useMemo, useState} from "react";
 import {DatePicker} from "@fluentui/react-datepicker-compat";
-import "../styles/editQuestion.scss"
+import "~/styles/editQuestion.scss"
 
 const EditQuestion = (props) => {
     const [response, setResponse] = useState(props.questions.filter((question) => question.Id === props.Id)[0])

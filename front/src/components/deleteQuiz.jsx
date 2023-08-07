@@ -8,7 +8,7 @@ import {
     DialogTrigger
 } from "@fluentui/react-components";
 import {Add20Filled, Delete20Filled, Dismiss20Regular, Edit20Filled} from "@fluentui/react-icons";
-import {api} from "../services/api";
+import {api} from "~/services/api";
 
 
 const DeleteQuiz = (props) => {

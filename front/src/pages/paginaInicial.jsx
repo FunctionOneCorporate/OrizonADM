@@ -1,6 +1,5 @@
-import "../styles/paginaInicial.scss"
-import HeaderNavigationBar from "../components/headerNavigationBar";
-import logo from "../assets/logo-rodape.png"
+import "~/styles/paginaInicial.scss"
+import logo from "~/assets/logo-rodape.png"
 const PaginaInicial = () => {
 
     return (

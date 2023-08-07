@@ -8,10 +8,10 @@ import {
     DialogTrigger, Field, Input, Textarea
 } from "@fluentui/react-components";
 import {Add20Filled, Dismiss20Regular, Edit20Filled} from "@fluentui/react-icons";
-import {api} from "../services/api";
+import {api} from "~/services/api";
 import {useState} from "react";
 import {DatePicker} from "@fluentui/react-datepicker-compat";
-import "../styles/editUser.scss"
+import "~/styles/editUser.scss"
 
 const EditUser = (props) => {
     const [response, setResponse] = useState(props.users.filter((user) => user.UserId === props.Id)[0])

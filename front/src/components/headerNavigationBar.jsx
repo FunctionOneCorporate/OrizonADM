@@ -1,4 +1,4 @@
-import "../styles/headerNavigationBar.scss"
+import "~/styles/headerNavigationBar.scss"
 import { Link } from "react-router-dom";
 
 const HeaderNavigationBar = () => {

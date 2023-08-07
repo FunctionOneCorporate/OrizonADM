@@ -6,12 +6,12 @@ import {
     DialogBody,
     DialogSurface,
     DialogTitle,
-    DialogTrigger, Field, Input, Radio, RadioGroup, Text, Textarea
+    DialogTrigger, Field, Input, Radio, RadioGroup, Textarea
 } from "@fluentui/react-components";
-import {Add20Filled, Dismiss16Regular, Dismiss20Regular} from "@fluentui/react-icons";
-import "../styles/addQuestion.scss"
-import {useEffect, useMemo, useState} from "react";
-import {api} from "../services/api";
+import { Add20Filled, Dismiss16Regular, Dismiss20Regular } from "@fluentui/react-icons";
+import "~/styles/addQuestion.scss"
+import { useEffect, useMemo, useState } from "react";
+import { api } from "~/services/api";
 
 const AddQuestion = (props) => {
     const [response, setResponse] = useState({
@@ -29,7 +29,7 @@ const AddQuestion = (props) => {
                 // props.setQuestions(oldArray => [...oldArray, response.data])
                 setChoices([])
                 props.setRefreshQuestions(!props.refreshQuestions)
-                console.log({response})
+                console.log({ response })
             })
             .catch((e) => {
                 return e;
@@ -43,38 +43,38 @@ const AddQuestion = (props) => {
                 {choices.map((choice, index) => {
                     return (
                         <div>
-                            <br/>
+                            <br />
                             <Badge key={index} appearance={"tint"} > {choice}</Badge>
                             <Button disableButtonEnhancement icon={<Dismiss16Regular />}
-                                    onClick={() => setChoices(choices.filter(item => item !== choice))}
-                                    size={"small"}
-                                    shape={"circular"}
-                                    style={{marginLeft:"1vw", float: "right"}}
+                                onClick={() => setChoices(choices.filter(item => item !== choice))}
+                                size={"small"}
+                                shape={"circular"}
+                                style={{ marginLeft: "1vw", float: "right" }}
                             />
-                            <br/>
+                            <br />
                         </div>
                     )
                 })}
             </div>
         )
     }
-    const memoList = useMemo(() => <List/>, [choices])
+    const memoList = useMemo(() => <List />, [choices])
 
     useEffect(() => {
 
-        if(answerType === "custom") {
-            setResponse({...response, Choices: choices.toString()})
+        if (answerType === "custom") {
+            setResponse({ ...response, Choices: choices.toString() })
         } else {
-            setResponse({...response, Choices: null})
+            setResponse({ ...response, Choices: null })
         }
     }, [answerType, choices])
 
     return (
         <Dialog>
             <DialogTrigger>
-                <div style={{float: "right"}}>
-                    <Button disableButtonEnhancement appearance={"primary"} icon={<Add20Filled/>}
-                            onClick={() => setResponse({...response, QuestionCatalogId: props.questionCatalogId})}/>
+                <div style={{ float: "right" }}>
+                    <Button disableButtonEnhancement appearance={"primary"} icon={<Add20Filled />}
+                        onClick={() => setResponse({ ...response, QuestionCatalogId: props.questionCatalogId })} />
                 </div>
             </DialogTrigger>
             <DialogSurface>
@@ -84,7 +84,7 @@ const AddQuestion = (props) => {
                             <Button
                                 appearance="subtle"
                                 aria-label="close"
-                                icon={<Dismiss20Regular/>}
+                                icon={<Dismiss20Regular />}
                             />
                         </DialogTrigger>
                     }>
@@ -93,34 +93,34 @@ const AddQuestion = (props) => {
                     <div className={"formContainer"}>
                         <Field label={"Questão"} className={"formInput"}>
                             <Textarea placeholder={"Digite a pergunta a ser inserida ao questionário"}
-                                      value={response.QuestionTitle}
-                                      onChange={(ev, data) => setResponse({...response, QuestionTitle: data.value})}/>
+                                value={response.QuestionTitle}
+                                onChange={(ev, data) => setResponse({ ...response, QuestionTitle: data.value })} />
                         </Field>
-                        <br/>
+                        <br />
                         <Field label={"Tipo de resposta"} className={"formInput"}>
                             <RadioGroup layout={"horizontal"}
-                                        value={answerType}
-                                        onChange={(ev, data) => setAnswerType(data.value)}
+                                value={answerType}
+                                onChange={(ev, data) => setAnswerType(data.value)}
                             >
-                                <Radio value={"default"} label={"Padrão (Sim ou não)"}/>
-                                <Radio value={"custom"} label={"Customizada"}/>
+                                <Radio value={"default"} label={"Padrão (Sim ou não)"} />
+                                <Radio value={"custom"} label={"Customizada"} />
                             </RadioGroup>
                         </Field>
-                        <br/>
+                        <br />
                         {answerType === "custom" &&
-                        <div>
-                            <Field label={"Respostas"}>
-                                <Input
-                                    onKeyPress={(event, data) => {
-                                        if (event.key === 'Enter') {
-                                            setChoices(oldArray => [...oldArray, event.target.value])
+                            <div>
+                                <Field label={"Respostas"}>
+                                    <Input
+                                        onKeyPress={(event, data) => {
+                                            if (event.key === 'Enter') {
+                                                setChoices(oldArray => [...oldArray, event.target.value])
+                                            }
                                         }
-                                    }
-                                    }
-                                />
-                                {memoList}
-                            </Field>
-                        </div>
+                                        }
+                                    />
+                                    {memoList}
+                                </Field>
+                            </div>
                         }
                     </div>
 
