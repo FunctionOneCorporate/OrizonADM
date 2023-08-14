@@ -27,14 +27,25 @@ const AddQuiz = (props) => {
     const goTo = (url) => {
         navigate(url)
     }
-    console.log({response})
+
+    const clearAnswers = () => {
+        setResponse({
+            CatalogName: "",
+            Description: "",
+            StartDateTimeUTC: "",
+            MinParticipantsToSend: "",
+            IsAnonymous: "false",
+            IgnoreWhenHasExternals: "false"
+        })
+    }
 
     const createQuestionCatalog = async () => {
         await api
             .post("questionCatalog/", response)
             .then((response) => {
-                props.setQuizzes(oldArray => [...oldArray, response.data])
+                // props.setQuizzes(oldArray => [...oldArray, response.data])
                 props.setRefresh(!props.refresh)
+                clearAnswers()
                 console.log({response})
             })
             .catch((e) => {
@@ -56,7 +67,7 @@ const AddQuiz = (props) => {
                             <Button
                                 appearance="subtle"
                                 aria-label="close"
-                                icon={<Dismiss20Regular/>}
+                                icon={<Dismiss20Regular onClick={clearAnswers}/>}
                             />
                         </DialogTrigger>
                     }>

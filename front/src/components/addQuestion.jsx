@@ -8,9 +8,9 @@ import {
     DialogTitle,
     DialogTrigger, Field, Input, Radio, RadioGroup, Textarea
 } from "@fluentui/react-components";
-import { Add20Filled, Dismiss16Regular, Dismiss20Regular } from "@fluentui/react-icons";
+import {Add20Filled, Add20Regular, Dismiss16Regular, Dismiss20Regular, Search20Regular} from "@fluentui/react-icons";
 import "~/styles/addQuestion.scss"
-import { useEffect, useMemo, useState } from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import { api } from "~/services/api";
 
 const AddQuestion = (props) => {
@@ -21,13 +21,24 @@ const AddQuestion = (props) => {
     })
     const [choices, setChoices] = useState([])
     const [answerType, setAnswerType] = useState("default")
+    const inputRef = useRef(null)
+
+    const clearAnswers = () => {
+        setResponse({
+            QuestionTitle: "",
+            QuestionCatalogId: "",
+            Choices: null || []
+        })
+        setChoices([])
+        setAnswerType("default")
+    }
 
     const createQuestion = async () => {
         await api
             .post("questions/", response)
             .then((response) => {
                 // props.setQuestions(oldArray => [...oldArray, response.data])
-                setChoices([])
+                clearAnswers()
                 props.setRefreshQuestions(!props.refreshQuestions)
                 console.log({ response })
             })
@@ -46,10 +57,10 @@ const AddQuestion = (props) => {
                             <br />
                             <Badge key={index} appearance={"tint"} > {choice}</Badge>
                             <Button disableButtonEnhancement icon={<Dismiss16Regular />}
-                                onClick={() => setChoices(choices.filter(item => item !== choice))}
-                                size={"small"}
-                                shape={"circular"}
-                                style={{ marginLeft: "1vw", float: "right" }}
+                                    onClick={() => setChoices(choices.filter(item => item !== choice))}
+                                    size={"small"}
+                                    shape={"circular"}
+                                    style={{ marginLeft: "1vw", float: "right" }}
                             />
                             <br />
                         </div>
@@ -74,7 +85,7 @@ const AddQuestion = (props) => {
             <DialogTrigger>
                 <div style={{ float: "right" }}>
                     <Button disableButtonEnhancement appearance={"primary"} icon={<Add20Filled />}
-                        onClick={() => setResponse({ ...response, QuestionCatalogId: props.questionCatalogId })} />
+                            onClick={() => setResponse({ ...response, QuestionCatalogId: props.questionCatalogId })} />
                 </div>
             </DialogTrigger>
             <DialogSurface>
@@ -84,7 +95,7 @@ const AddQuestion = (props) => {
                             <Button
                                 appearance="subtle"
                                 aria-label="close"
-                                icon={<Dismiss20Regular />}
+                                icon={<Dismiss20Regular onClick={clearAnswers}/>}
                             />
                         </DialogTrigger>
                     }>
@@ -93,14 +104,14 @@ const AddQuestion = (props) => {
                     <div className={"formContainer"}>
                         <Field label={"Questão"} className={"formInput"}>
                             <Textarea placeholder={"Digite a pergunta a ser inserida ao questionário"}
-                                value={response.QuestionTitle}
-                                onChange={(ev, data) => setResponse({ ...response, QuestionTitle: data.value })} />
+                                      value={response.QuestionTitle}
+                                      onChange={(ev, data) => setResponse({ ...response, QuestionTitle: data.value })} />
                         </Field>
                         <br />
                         <Field label={"Tipo de resposta"} className={"formInput"}>
                             <RadioGroup layout={"horizontal"}
-                                value={answerType}
-                                onChange={(ev, data) => setAnswerType(data.value)}
+                                        value={answerType}
+                                        onChange={(ev, data) => setAnswerType(data.value)}
                             >
                                 <Radio value={"default"} label={"Padrão (Sim ou não)"} />
                                 <Radio value={"custom"} label={"Customizada"} />
@@ -108,19 +119,16 @@ const AddQuestion = (props) => {
                         </Field>
                         <br />
                         {answerType === "custom" &&
-                            <div>
-                                <Field label={"Respostas"}>
-                                    <Input
-                                        onKeyPress={(event, data) => {
-                                            if (event.key === 'Enter') {
-                                                setChoices(oldArray => [...oldArray, event.target.value])
-                                            }
-                                        }
-                                        }
-                                    />
-                                    {memoList}
-                                </Field>
-                            </div>
+                        <div>
+                            <Field label={"Respostas"}>
+                                <Input
+                                    ref={inputRef}
+                                    // onChange={(event, data) => setChoices(oldArray => [...oldArray, event.target.value])}
+                                    contentAfter={<Button appearance={"transparent"} icon={<Add20Regular/>} onClick={() => setChoices(oldArray => [...oldArray, inputRef.current.value])} />}
+                                />
+                                {memoList}
+                            </Field>
+                        </div>
                         }
                     </div>
 

@@ -15,7 +15,7 @@ import "~/styles/editQuizz.scss"
 
 const EditQuiz = (props) => {
     const [response, setResponse] = useState(props.quizzes.filter((quiz) => quiz.Id === props.Id)[0])
-    console.log({response})
+
     const handleUpdate = async () => {
         await api
             .patch("questionCatalog/"+ parseInt(props.Id), response)

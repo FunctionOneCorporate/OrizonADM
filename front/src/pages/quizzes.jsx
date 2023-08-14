@@ -62,8 +62,6 @@ const Questionarios = () => {
         getQuestions()
     }, [selectedQuiz, refreshQuestions])
 
-    console.log({quizzes})
-    console.log({questions})
     return (
         <div className={"questionsContainer"}>
             <div className={"title"}>
