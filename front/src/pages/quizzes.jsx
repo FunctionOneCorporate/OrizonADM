@@ -20,6 +20,7 @@ const Questionarios = () => {
     const [quizzes, setQuizzes] = useState([])
     const [questions, setQuestions] = useState([])
     const [selectedQuiz, setSelectedQuiz] = useState(null)
+    const [selectedOptions, setSelectedOptions] = useState([""])
     const [refresh, setRefresh] = useState(false)
     const [refreshQuestions, setRefreshQuestions] = useState(false)
 
@@ -33,6 +34,9 @@ const Questionarios = () => {
             .get("questionCatalog/all")
             .then((response) => {
                 setQuizzes(response.data)
+                const sortedQuizzesByDate = response.data.sort((a,b) => new Date(b.StartDateTimeUTC).getTime() - new Date(a.StartDateTimeUTC).getTime())
+                setSelectedQuiz(sortedQuizzesByDate[0])
+                selectedOptions(sortedQuizzesByDate[0].Id)
             })
             .catch((e) => {
                 return e;
@@ -42,11 +46,10 @@ const Questionarios = () => {
 
     const getQuestions = async () => {
         await api
-            .get("questions/" + parseInt(selectedQuiz))
+            .get("questions/" + parseInt(selectedQuiz.Id))
             .then((response) => {
                 setQuestions(response.data)
                 // props.setRefresh(!props.refresh)
-                console.log({response})
             })
             .catch((e) => {
                 return e;
@@ -71,7 +74,13 @@ const Questionarios = () => {
                 <h2>Selecione o Questionário</h2>
                 <div style={{display: "flex", flexDirection: "row"}}>
                     <Dropdown placeholder={"Selecione um questionário"} className={"quizDropdown"}
-                              onOptionSelect={(ev, data) => setSelectedQuiz(data.optionValue)}>
+                              selectedOptions={selectedOptions}
+                              onOptionSelect={(ev, data) => {
+                                  setSelectedQuiz(quizzes.filter((quiz) => quiz.Id === data.optionValue)[0])
+                                  setSelectedOptions(data.selectedOptions)
+                              }}
+                              value={selectedQuiz ? selectedQuiz.CatalogName : ""}
+                    >
                         {quizzes.map((quiz) => (
                             <Option key={quiz.Id} value={quiz.Id}>
                                 {quiz.CatalogName}
@@ -89,7 +98,7 @@ const Questionarios = () => {
             </div>
             {selectedQuiz && <div className={"questionSelection"}>
                 <br/>
-                <AddQuestion questionCatalogId={selectedQuiz} questions={questions} setQuestions={setQuestions} refreshQuestions={refreshQuestions} setRefreshQuestions={setRefreshQuestions}/>
+                <AddQuestion questionCatalogId={selectedQuiz.Id} questions={questions} setQuestions={setQuestions} refreshQuestions={refreshQuestions} setRefreshQuestions={setRefreshQuestions}/>
                 <br/><br/>
                 <Table size={"medium"} className={"tableQuestions"}>
                     <TableHeader>

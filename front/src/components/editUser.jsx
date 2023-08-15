@@ -15,7 +15,7 @@ import "~/styles/editUser.scss"
 
 const EditUser = (props) => {
     const [response, setResponse] = useState(props.users.filter((user) => user.UserId === props.Id)[0])
-    console.log({response})
+
     const handleUpdate = async () => {
         await api
             .patch("userConversation/" + (props.Id), response)
@@ -56,12 +56,12 @@ const EditUser = (props) => {
                             />
                         </Field>
                         <br/>
-                        <Checkbox
-                            className={"formInput"}
-                            checked={response.SendOnlyToThis}
-                            onChange={() => setResponse({...response, SendOnlyToThis: !response.SendOnlyToThis})}
-                            label="Enviar questionário somente para este participante"
-                        />
+                        {/*<Checkbox*/}
+                        {/*    className={"formInput"}*/}
+                        {/*    checked={response.SendOnlyToThis}*/}
+                        {/*    onChange={() => setResponse({...response, SendOnlyToThis: !response.SendOnlyToThis})}*/}
+                        {/*    label="Enviar questionário somente para este participante"*/}
+                        {/*/>*/}
                         <Checkbox
                             className={"formInput"}
                             checked={response.DontSendToThis}

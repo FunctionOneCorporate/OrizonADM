@@ -29,7 +29,7 @@ const Participantes = () => {
 
     const columns = [
         {columnKey: "UserPrincipalName", label: "Nome"},
-        {columnKey: "SendOnlyToThis", label: "Somente Para"},
+        // {columnKey: "SendOnlyToThis", label: "Somente Para"},
         {columnKey: "DontSendToThis", label: "Não enviar Para"},
         {columnKey: "Action", label: ""},
     ];
@@ -50,7 +50,7 @@ const Participantes = () => {
         // getQuestions()
         getusers()
     }, [refresh])
-    console.log({users})
+
     return (
         <div className={"participantsContainer"}>
             <div className={"title"}>
@@ -78,8 +78,8 @@ const Participantes = () => {
                     <MenuPopover>
                         <MenuList>
                             <MenuItem onClick={() => setFilter("")}>Listar Todos</MenuItem>
-                            <MenuItem onClick={() => setFilter("sendTo")}>Listar somente os
-                                que receberão questionário</MenuItem>
+                            {/*<MenuItem onClick={() => setFilter("sendTo")}>Listar somente os*/}
+                            {/*    que receberão questionário</MenuItem>*/}
                             <MenuItem onClick={() => setFilter("dontSend")}>Listar somente
                                 os que não receberão questionário</MenuItem>
                         </MenuList>
@@ -102,15 +102,16 @@ const Participantes = () => {
                     <TableBody>
                         {users
                             .filter((item) => searchInput === "" ? item === item : item.UserPrincipalName.toLowerCase().includes(searchInput.toLowerCase()))
-                            .filter((item) => filter === "" ? item === item : filter === "sendTo" ? item.SendOnlyToThis : item.DontSendToThis)
+                            // .filter((item) => filter === "" ? item === item : filter === "sendTo" ? item.SendOnlyToThis : item.DontSendToThis)
+                            .filter((item) => filter === "" ? item : item.DontSendToThis)
                             .map((item) => (
                             <TableRow appearance={"neutral"}>
                                 <TableCell className={"tableCellQuestions"}>
                                     {item.UserPrincipalName}
                                 </TableCell>
-                                <TableCell className={"tableCellQuestions"}>
-                                    {item.SendOnlyToThis ? <Checkmark20Regular/> : <Dismiss20Regular/>}
-                                </TableCell>
+                                {/*<TableCell className={"tableCellQuestions"}>*/}
+                                {/*    {item.SendOnlyToThis ? <Checkmark20Regular/> : <Dismiss20Regular/>}*/}
+                                {/*</TableCell>*/}
                                 <TableCell className={"tableCellQuestions"}>
                                     {item.DontSendToThis ? <Checkmark20Regular/> : <Dismiss20Regular/>}
                                 </TableCell>
