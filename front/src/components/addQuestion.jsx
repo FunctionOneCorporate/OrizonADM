@@ -22,6 +22,17 @@ const AddQuestion = (props) => {
     const [choices, setChoices] = useState([])
     const [answerType, setAnswerType] = useState("default")
     const inputRef = useRef(null)
+    const [disableButton, setDisableButton] = useState(false)
+
+    const inputValidation = () => {
+        if(inputRef.current !== null) {
+            if(choices.indexOf(inputRef.current.value) !== -1) {
+                setDisableButton(true)
+            } else {
+                setDisableButton(false)
+            }
+        }
+    }
 
     const clearAnswers = () => {
         setResponse({
@@ -78,6 +89,7 @@ const AddQuestion = (props) => {
         } else {
             setResponse({ ...response, Choices: null })
         }
+        inputValidation()
     }, [answerType, choices])
 
     return (
@@ -123,8 +135,11 @@ const AddQuestion = (props) => {
                             <Field label={"Respostas"}>
                                 <Input
                                     ref={inputRef}
-                                    // onChange={(event, data) => setChoices(oldArray => [...oldArray, event.target.value])}
-                                    contentAfter={<Button appearance={"transparent"} icon={<Add20Regular/>} onClick={() => setChoices(oldArray => [...oldArray, inputRef.current.value])} />}
+                                    onChange={inputValidation}
+                                    contentAfter={<Button disabled={disableButton} appearance={"transparent"} icon={<Add20Regular/>} onClick={() => {
+                                        setChoices(oldArray => [...oldArray, inputRef.current.value])
+                                        inputRef.current.value = ""
+                                    }} />}
                                 />
                                 {memoList}
                             </Field>

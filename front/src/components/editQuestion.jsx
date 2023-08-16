@@ -8,9 +8,9 @@ import {
     DialogTitle,
     DialogTrigger, Field, Input, Radio, RadioGroup, Textarea
 } from "@fluentui/react-components";
-import {Add20Filled, Dismiss16Regular, Dismiss20Regular, Edit20Filled} from "@fluentui/react-icons";
+import {Add20Filled, Add20Regular, Dismiss16Regular, Dismiss20Regular, Edit20Filled} from "@fluentui/react-icons";
 import {api} from "~/services/api";
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import {DatePicker} from "@fluentui/react-datepicker-compat";
 import "~/styles/editQuestion.scss"
 
@@ -18,6 +18,8 @@ const EditQuestion = (props) => {
     const [response, setResponse] = useState(props.questions.filter((question) => question.Id === props.Id)[0])
     const [choices, setChoices] = useState(response.Choices ? response.Choices.split(",") : [])
     const [answerType, setAnswerType] = useState(response.Choices !== null ? "custom" : "default")
+    const [disableButton, setDisableButton] = useState(false)
+    const inputRef = useRef(null)
 
     const handleUpdate = async () => {
         await api
@@ -35,9 +37,9 @@ const EditQuestion = (props) => {
             <div>
                 {choices.map((choice, index) => {
                     return (
-                        <div>
+                        <div key={index}>
                             <br/>
-                            <Badge key={index} appearance={"tint"}> {choice}</Badge>
+                            <Badge key={choice} appearance={"tint"}> {choice}</Badge>
                             <Button disableButtonEnhancement icon={<Dismiss16Regular/>}
                                     onClick={() => setChoices(choices.filter(item => item !== choice))}
                                     size={"small"}
@@ -53,6 +55,16 @@ const EditQuestion = (props) => {
     }
     const memoList = useMemo(() => <List/>, [choices])
 
+    const inputValidation = () => {
+        if(inputRef.current !== null) {
+            if(choices.indexOf(inputRef.current.value) !== -1) {
+                setDisableButton(true)
+            } else {
+                setDisableButton(false)
+            }
+        }
+    }
+
     useEffect(() => {
 
         if (answerType === "custom") {
@@ -60,6 +72,7 @@ const EditQuestion = (props) => {
         } else {
             setResponse({...response, Choices: null})
         }
+        inputValidation()
     }, [answerType, choices])
 
     return (
@@ -102,12 +115,12 @@ const EditQuestion = (props) => {
                         <div>
                             <Field label={"Respostas"}>
                                 <Input
-                                    onKeyPress={(event, data) => {
-                                        if (event.key === 'Enter') {
-                                            setChoices(oldArray => [...oldArray, event.target.value])
-                                        }
-                                    }
-                                    }
+                                    ref={inputRef}
+                                    onChange={inputValidation}
+                                    contentAfter={<Button disabled={disableButton} appearance={"transparent"} icon={<Add20Regular/>} onClick={() => {
+                                        setChoices(oldArray => [...oldArray, inputRef.current.value])
+                                        inputRef.current.value = ""
+                                    }} />}
                                 />
                                 {memoList}
                             </Field>
