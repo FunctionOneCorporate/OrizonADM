@@ -62,7 +62,9 @@ const Questionarios = () => {
     }, [refresh])
 
     useEffect(() => {
-        getQuestions()
+        if (selectedQuiz) {
+            getQuestions()
+        }
     }, [selectedQuiz, refreshQuestions])
 
     return (
@@ -111,8 +113,8 @@ const Questionarios = () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {questions.map((item) => (
-                            <TableRow appearance={"neutral"}>
+                        {questions.map((item, index) => (
+                            <TableRow appearance={"neutral"} key={index}>
                                 <TableCell className={"tableCellQuestions"}>
                                     {item.QuestionTitle}
                                 </TableCell>

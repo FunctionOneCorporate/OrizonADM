@@ -58,8 +58,8 @@ const DialogQuizzes = (props) => {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {props.quizzes.map((item) => (
-                                    <TableRow appearance={"neutral"} >
+                                {props.quizzes.map((item, index) => (
+                                    <TableRow appearance={"neutral"} key={index} >
                                         <TableCell as={"div"} className={"tableCell"}>
                                             {item.CatalogName}
                                         </TableCell>

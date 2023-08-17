@@ -85,7 +85,7 @@ const AddQuestion = (props) => {
     useEffect(() => {
 
         if (answerType === "custom") {
-            setResponse({ ...response, Choices: choices.toString() })
+            setResponse({ ...response, Choices: choices })
         } else {
             setResponse({ ...response, Choices: null })
         }
@@ -137,6 +137,7 @@ const AddQuestion = (props) => {
                                     ref={inputRef}
                                     onChange={inputValidation}
                                     contentAfter={<Button disabled={disableButton} appearance={"transparent"} icon={<Add20Regular/>} onClick={() => {
+                                        // setChoices(oldArray => [...oldArray, inputRef.current.value])
                                         setChoices(oldArray => [...oldArray, inputRef.current.value])
                                         inputRef.current.value = ""
                                     }} />}
@@ -149,7 +150,7 @@ const AddQuestion = (props) => {
 
                     <DialogActions>
                         <DialogTrigger disableButtonEnhancement>
-                            <Button appearance="primary" onClick={() => createQuestion()}>Gravar</Button>
+                            <Button  appearance="primary" onClick={() => createQuestion()}>Gravar</Button>
                         </DialogTrigger>
                         <DialogTrigger disableButtonEnhancement>
                             <Button appearance="secondary">Fechar</Button>

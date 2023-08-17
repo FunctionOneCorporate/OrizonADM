@@ -16,7 +16,7 @@ import "~/styles/editQuestion.scss"
 
 const EditQuestion = (props) => {
     const [response, setResponse] = useState(props.questions.filter((question) => question.Id === props.Id)[0])
-    const [choices, setChoices] = useState(response.Choices ? response.Choices.split(",") : [])
+    const [choices, setChoices] = useState(response.Choices ? response.Choices : [])
     const [answerType, setAnswerType] = useState(response.Choices !== null ? "custom" : "default")
     const [disableButton, setDisableButton] = useState(false)
     const inputRef = useRef(null)
@@ -39,7 +39,8 @@ const EditQuestion = (props) => {
                     return (
                         <div key={index}>
                             <br/>
-                            <Badge key={choice} appearance={"tint"}> {choice}</Badge>
+                            {/*<Badge key={choice} appearance={"tint"}> {choice}</Badge>*/}
+                            <Badge key={choice} appearance={"tint"}> {choice.replace(/[^\w\s]/gi, "")}</Badge>
                             <Button disableButtonEnhancement icon={<Dismiss16Regular/>}
                                     onClick={() => setChoices(choices.filter(item => item !== choice))}
                                     size={"small"}
@@ -68,7 +69,7 @@ const EditQuestion = (props) => {
     useEffect(() => {
 
         if (answerType === "custom") {
-            setResponse({...response, Choices: choices.toString()})
+            setResponse({...response, Choices: choices})
         } else {
             setResponse({...response, Choices: null})
         }
