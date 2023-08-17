@@ -130,7 +130,7 @@ const EditQuestion = (props) => {
                     </div>
                     <DialogActions>
                         <DialogTrigger disableButtonEnhancement>
-                            <Button appearance="primary" onClick={() => handleUpdate()}>Salvar</Button>
+                            <Button disabled={answerType === "custom" && choices.length <= 1} appearance="primary" onClick={() => handleUpdate()}>Salvar</Button>
                         </DialogTrigger>
                         <DialogTrigger disableButtonEnhancement>
                             <Button appearance="secondary">Fechar</Button>

@@ -150,7 +150,7 @@ const AddQuestion = (props) => {
 
                     <DialogActions>
                         <DialogTrigger disableButtonEnhancement>
-                            <Button  appearance="primary" onClick={() => createQuestion()}>Gravar</Button>
+                            <Button disabled={answerType === "custom" && choices.length <= 1} appearance="primary" onClick={() => createQuestion()}>Gravar</Button>
                         </DialogTrigger>
                         <DialogTrigger disableButtonEnhancement>
                             <Button appearance="secondary">Fechar</Button>
