@@ -14,6 +14,35 @@ import {DatePicker} from "@fluentui/react-datepicker-compat";
 import "~/styles/editQuizz.scss"
 
 const EditQuiz = (props) => {
+    const DayPickerStrings = {
+        months: [
+            'Janeiro',
+            'Fevereiro',
+            'Março',
+            'Abril',
+            'Maio',
+            'Junho',
+            'Julho',
+            'Agosto',
+            'Setembro',
+            'Outubro',
+            'Novembro',
+            'Dezembro'
+        ],
+
+        shortMonths: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+
+        days: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+
+        shortDays: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+
+        goToToday: 'Go to today',
+        prevMonthAriaLabel: 'Go to previous month',
+        nextMonthAriaLabel: 'Go to next month',
+        prevYearAriaLabel: 'Go to previous year',
+        nextYearAriaLabel: 'Go to next year'
+    };
+
     const [response, setResponse] = useState(props.quizzes.filter((quiz) => quiz.Id === props.Id)[0])
 
     const handleUpdate = async () => {
@@ -27,6 +56,22 @@ const EditQuiz = (props) => {
                 return e;
             })
     }
+
+    const onFormatDate = (date) => {
+        let day = date.getDate()
+        let month = date.getMonth() + 1
+        let year = date.getFullYear()
+        if (day < 10) {
+            day = '0' + day;
+        }
+
+        if (month < 10) {
+            month = `0${month}`;
+        }
+        return !date
+            ? ""
+            : day + "/" + month + "/" + year;
+    };
 
     return (
         <Dialog>
@@ -66,6 +111,8 @@ const EditQuiz = (props) => {
                             <DatePicker
                                 value={new Date(response.StartDateTimeUTC)}
                                 onSelectDate={(ev) => setResponse({...response, StartDateTimeUTC: ev})}
+                                strings={DayPickerStrings}
+                                formatDate={onFormatDate}
                             />
                         </Field>
                         <br/>

@@ -10,11 +10,40 @@ import {
 import {DatePicker} from "@fluentui/react-datepicker-compat";
 import {Add20Filled, Dismiss20Regular} from "@fluentui/react-icons";
 import "~/styles/addQuiz.scss"
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import {api} from "~/services/api";
 import {useNavigate} from 'react-router-dom';
 
 const AddQuiz = (props) => {
+    const DayPickerStrings = {
+        months: [
+            'Janeiro',
+            'Fevereiro',
+            'Março',
+            'Abril',
+            'Maio',
+            'Junho',
+            'Julho',
+            'Agosto',
+            'Setembro',
+            'Outubro',
+            'Novembro',
+            'Dezembro'
+        ],
+
+        shortMonths: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+
+        days: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+
+        shortDays: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+
+        goToToday: 'Go to today',
+        prevMonthAriaLabel: 'Go to previous month',
+        nextMonthAriaLabel: 'Go to next month',
+        prevYearAriaLabel: 'Go to previous year',
+        nextYearAriaLabel: 'Go to next year'
+    };
+
     const [response, setResponse] = useState({
         CatalogName: "",
         Description: "",
@@ -53,6 +82,23 @@ const AddQuiz = (props) => {
             })
 
     }
+
+    const onFormatDate = (date) => {
+        let day = date.getDate()
+        let month = date.getMonth() + 1
+        let year = date.getFullYear()
+        if (day < 10) {
+            day = '0' + day;
+        }
+
+        if (month < 10) {
+            month = `0${month}`;
+        }
+        return !date
+            ? ""
+            : day + "/" + month + "/" + year;
+    };
+
     return (
         <Dialog>
             <DialogTrigger>
@@ -90,6 +136,9 @@ const AddQuiz = (props) => {
                         <Field label={"Usar esse questionário a partir de"} className={"formInput"}>
                             <DatePicker
                                 onSelectDate={(ev) => setResponse({...response, StartDateTimeUTC: ev})}
+                                strings={DayPickerStrings}
+                                formatDate={onFormatDate}
+                                value={response.StartDateTimeUTC}
                             />
                         </Field>
                         <br/>
