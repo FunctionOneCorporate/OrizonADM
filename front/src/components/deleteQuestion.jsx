@@ -19,6 +19,7 @@ const DeleteQuestion = (props) => {
             .then((response) => {
                 // props.setQuestions(oldArray => [...oldArray, response.data])
                 props.setRefreshQuestions(!props.refreshQuestions)
+                props.setLoading(true)
                 console.log({ response })
             })
             .catch((e) => {

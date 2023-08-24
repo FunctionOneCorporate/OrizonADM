@@ -27,6 +27,7 @@ const EditQuestion = (props) => {
             .then((response) => {
                 // props.setQuestions(oldArray => [...oldArray, response.data])
                 props.setRefreshQuestions(!props.refreshQuestions)
+                props.setLoading(true)
             })
             .catch((e) => {
                 return e;

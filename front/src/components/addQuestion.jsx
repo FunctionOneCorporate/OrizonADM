@@ -51,6 +51,7 @@ const AddQuestion = (props) => {
                 // props.setQuestions(oldArray => [...oldArray, response.data])
                 clearAnswers()
                 props.setRefreshQuestions(!props.refreshQuestions)
+                props.setLoading(true)
                 console.log({ response })
             })
             .catch((e) => {

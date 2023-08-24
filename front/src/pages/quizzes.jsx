@@ -14,6 +14,7 @@ import AddQuestion from "~/components/addQuestion";
 import DeleteQuestion from "~/components/deleteQuestion";
 import EditQuestion from "~/components/editQuestion";
 import DialogQuestionRamification from "~/components/dialogQuestionRamification";
+import Loading from "~/components/loading";
 
 
 const Questionarios = () => {
@@ -22,6 +23,7 @@ const Questionarios = () => {
     const [selectedQuiz, setSelectedQuiz] = useState(null)
     const [selectedOptions, setSelectedOptions] = useState([""])
     const [refresh, setRefresh] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [refreshQuestions, setRefreshQuestions] = useState(false)
 
     const columns = [
@@ -37,6 +39,7 @@ const Questionarios = () => {
                 const sortedQuizzesByDate = response.data.sort((a,b) => new Date(b.StartDateTimeUTC).getTime() - new Date(a.StartDateTimeUTC).getTime())
                 setSelectedQuiz(sortedQuizzesByDate[0])
                 selectedOptions(sortedQuizzesByDate[0].Id)
+
             })
             .catch((e) => {
                 return e;
@@ -49,6 +52,7 @@ const Questionarios = () => {
             .get("questions/" + parseInt(selectedQuiz.Id))
             .then((response) => {
                 setQuestions(response.data)
+                setLoading(false)
                 // props.setRefresh(!props.refresh)
             })
             .catch((e) => {
@@ -69,66 +73,71 @@ const Questionarios = () => {
 
     return (
         <div className={"questionsContainer"}>
-            <div className={"title"}>
-                <h1>Questionários</h1>
-            </div>
-            <div className={"quizSelection"}>
-                <h2>Selecione o Questionário</h2>
-                <div style={{display: "flex", flexDirection: "row"}}>
-                    <Dropdown placeholder={"Selecione um questionário"} className={"quizDropdown"}
-                              selectedOptions={selectedOptions}
-                              onOptionSelect={(ev, data) => {
-                                  setSelectedQuiz(quizzes.filter((quiz) => quiz.Id === data.optionValue)[0])
-                                  setSelectedOptions(data.selectedOptions)
-                              }}
-                              value={selectedQuiz ? selectedQuiz.CatalogName : ""}
-                    >
-                        {quizzes.map((quiz) => (
-                            <Option key={quiz.Id} value={quiz.Id}>
-                                {quiz.CatalogName}
-                            </Option>
-                        ))}
-                    </Dropdown>
-                    {/*dialog com a lista de questionários*/}
-                    <DialogQuizzes quizzes={quizzes} setQuizzes={setQuizzes} refresh={refresh} setRefresh={setRefresh}/>
-                </div>
+            {loading ? <Loading/> :
+                <>
+                    <div className={"title"}>
+                        <h1>Questionários</h1>
+                    </div>
+                    <div className={"quizSelection"}>
+                        <h2>Selecione o Questionário</h2>
+                        <div style={{display: "flex", flexDirection: "row"}}>
+                            <Dropdown placeholder={"Selecione um questionário"} className={"quizDropdown"}
+                                      selectedOptions={selectedOptions}
+                                      onOptionSelect={(ev, data) => {
+                                          setSelectedQuiz(quizzes.filter((quiz) => quiz.Id === data.optionValue)[0])
+                                          setSelectedOptions(data.selectedOptions)
+                                      }}
+                                      value={selectedQuiz ? selectedQuiz.CatalogName : ""}
+                            >
+                                {quizzes.map((quiz) => (
+                                    <Option key={quiz.Id} value={quiz.Id}>
+                                        {quiz.CatalogName}
+                                    </Option>
+                                ))}
+                            </Dropdown>
+                            {/*dialog com a lista de questionários*/}
+                            <DialogQuizzes quizzes={quizzes} setQuizzes={setQuizzes} refresh={refresh} setRefresh={setRefresh} setLoading={setLoading}/>
+                        </div>
 
-                <br/><br/>
-                <div className={"quizDropdown"}>
-                    <Divider/>
-                </div>
-            </div>
-            {selectedQuiz && <div className={"questionSelection"}>
-                <br/>
-                <AddQuestion questionCatalogId={selectedQuiz.Id} questions={questions} setQuestions={setQuestions} refreshQuestions={refreshQuestions} setRefreshQuestions={setRefreshQuestions}/>
-                <br/><br/>
-                <Table size={"medium"} className={"tableQuestions"}>
-                    <TableHeader>
-                        <TableRow>
-                            {columns.map((column) => (
-                                <TableHeaderCell key={column.columnKey}>
-                                    <strong>{column.label}</strong>
-                                </TableHeaderCell>
-                            ))}
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {questions.map((item, index) => (
-                            <TableRow appearance={"neutral"} key={index}>
-                                <TableCell className={"tableCellQuestions"}>
-                                    {item.QuestionTitle}
-                                </TableCell>
-                                <TableCell className={"tableCellQuestionsIcon"}>
-                                    <EditQuestion Id={item.Id} questions={questions} setQuestions={setQuestions} refreshQuestions={refreshQuestions} setRefreshQuestions={setRefreshQuestions}/>
-                                    <DeleteQuestion Id={item.Id} questions={questions} setQuestions={setQuestions} refreshQuestions={refreshQuestions} setRefreshQuestions={setRefreshQuestions}/>
-                                    {/*<DialogQuestionRamification Id={item.Id} question={item} refreshQuestions={refreshQuestions} setRefreshQuestions={setRefreshQuestions}/>*/}
-                                </TableCell>
-                            </TableRow>
+                        <br/><br/>
+                        <div className={"quizDropdown"}>
+                            <Divider/>
+                        </div>
+                    </div>
+                    {selectedQuiz && <div className={"questionSelection"}>
+                        <br/>
+                        <AddQuestion questionCatalogId={selectedQuiz.Id} questions={questions} setQuestions={setQuestions} refreshQuestions={refreshQuestions} setRefreshQuestions={setRefreshQuestions} setLoading={setLoading}/>
+                        <br/><br/>
+                        <Table size={"medium"} className={"tableQuestions"}>
+                            <TableHeader>
+                                <TableRow>
+                                    {columns.map((column) => (
+                                        <TableHeaderCell key={column.columnKey}>
+                                            <strong>{column.label}</strong>
+                                        </TableHeaderCell>
+                                    ))}
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {questions.map((item, index) => (
+                                    <TableRow appearance={"neutral"} key={index}>
+                                        <TableCell className={"tableCellQuestions"}>
+                                            {item.QuestionTitle}
+                                        </TableCell>
+                                        <TableCell className={"tableCellQuestionsIcon"}>
+                                            <EditQuestion Id={item.Id} questions={questions} setQuestions={setQuestions} refreshQuestions={refreshQuestions} setRefreshQuestions={setRefreshQuestions} setLoading={setLoading}/>
+                                            <DeleteQuestion Id={item.Id} questions={questions} setQuestions={setQuestions} refreshQuestions={refreshQuestions} setRefreshQuestions={setRefreshQuestions} setLoading={setLoading}/>
+                                            {/*<DialogQuestionRamification Id={item.Id} question={item} refreshQuestions={refreshQuestions} setRefreshQuestions={setRefreshQuestions}/>*/}
+                                        </TableCell>
+                                    </TableRow>
 
-                        ))}
-                    </TableBody>
-                </Table>
-            </div>}
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>}
+                </>
+            }
+
 
         </div>
     )

@@ -22,6 +22,7 @@ const EditUser = (props) => {
             .then((response) => {
                 // props.setQuestions(oldArray => [...oldArray, response.data])
                 props.setRefresh(!props.refresh)
+                props.setLoading(true)
                 console.log({response})
             })
             .catch((e) => {
@@ -64,9 +65,9 @@ const EditUser = (props) => {
                         {/*/>*/}
                         <Checkbox
                             className={"formInput"}
-                            checked={response.DontSendToThis}
+                            checked={!response.DontSendToThis}
                             onChange={() => setResponse({...response, DontSendToThis: !response.DontSendToThis})}
-                            label="Não enviar questionário para este participante"
+                            label="Enviar questionário para este participante"
                         />
                     </div>
                     <DialogActions>
