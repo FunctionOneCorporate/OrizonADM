@@ -52,7 +52,6 @@ const AddQuestion = (props) => {
                 clearAnswers()
                 props.setRefreshQuestions(!props.refreshQuestions)
                 props.setLoading(true)
-                console.log({ response })
             })
             .catch((e) => {
                 return e;
