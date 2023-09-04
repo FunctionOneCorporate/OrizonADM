@@ -51,10 +51,11 @@ const EditUser = (props) => {
                     </DialogTitle>
                     <div className={"formContainer"}>
                         <Field label={"Participante"} className={"formInput"}>
-                            <Input placeholder={"Digite a pergunta a ser inserida ao questionário"}
-                                      value={response.UserPrincipalName}
-                                      disabled
-                            />
+                            <Input value={response.UserPrincipalName} disabled/>
+                        </Field>
+                        <br/>
+                        <Field label={"Email"} className={"formInput"}>
+                            <Input value={response.UserEmail} disabled/>
                         </Field>
                         <br/>
                         {/*<Checkbox*/}

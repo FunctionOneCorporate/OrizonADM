@@ -46,11 +46,13 @@ model Question {
 }
 
 model QuestionAnswer {
-  Id               Int       @id(map: "PK_QuestionAnswer") @default(autoincrement())
-  QuestionId       Int
-  ParticipantId    String?   @db.NVarChar(Max)
-  Answer           String?   @db.NVarChar(Max)
-  InputDateTimeUTC DateTime? @default(dbgenerated("getutcdate()"), map: "DF__QuestionA__Input__0D7A0286") @db.DateTime
+  Id                    Int                  @id(map: "PK_QuestionAnswer") @default(autoincrement())
+  QuestionId            Int
+  ParticipantId         String?              @db.NVarChar(Max)
+  Answer                String?              @db.NVarChar(Max)
+  InputDateTimeUTC      DateTime?            @default(dbgenerated("getutcdate()"), map: "DF__QuestionA__Input__0D7A0286") @db.DateTime
+  SubscriptionMeetingId String?              @db.UniqueIdentifier
+  SubscriptionMeeting   SubscriptionMeeting? @relation(fields: [SubscriptionMeetingId], references: [Id], onUpdate: SetNull, map: "QuestionAnswer_FK")
 }
 
 model QuestionBranching {
@@ -82,19 +84,20 @@ model QuestionCatalog {
 }
 
 model SubscriptionMeeting {
-  Id                      String    @id(map: "SubscriptionMeeting_PK") @default(dbgenerated("newid()"), map: "DF__Subscription__Id__17036CC0") @db.UniqueIdentifier
-  SubscriptionId          String?   @db.VarChar(128)
-  Organizer               String    @db.VarChar(128)
-  MeetingId               String    @db.VarChar(256)
-  MeetingJoinUrl          String    @db.VarChar(1024)
-  MeetingTitle            String    @db.VarChar(256)
-  MeetingStart            DateTime? @db.DateTimeOffset
-  MeetingEnd              DateTime? @db.DateTimeOffset
-  CreatedAt               DateTime  @default(dbgenerated("sysutcdatetime()"), map: "DF__Subscript__Creat__17F790F9") @db.DateTime
-  FinishedAt              DateTime? @db.DateTime
-  SubscriptionCreateError String?   @db.VarChar(Max)
-  MeetingResourceUrl      String    @db.VarChar(Max)
-  MeetingAttendees        String?   @db.VarChar(Max)
+  Id                      String           @id(map: "SubscriptionMeeting_PK") @default(dbgenerated("newid()"), map: "DF__Subscription__Id__17036CC0") @db.UniqueIdentifier
+  SubscriptionId          String?          @db.VarChar(128)
+  Organizer               String           @db.VarChar(128)
+  MeetingId               String           @db.VarChar(256)
+  MeetingJoinUrl          String           @db.VarChar(1024)
+  MeetingTitle            String           @db.VarChar(256)
+  MeetingStart            DateTime?        @db.DateTimeOffset
+  MeetingEnd              DateTime?        @db.DateTimeOffset
+  CreatedAt               DateTime         @default(dbgenerated("sysutcdatetime()"), map: "DF__Subscript__Creat__17F790F9") @db.DateTime
+  FinishedAt              DateTime?        @db.DateTime
+  SubscriptionCreateError String?          @db.VarChar(Max)
+  MeetingResourceUrl      String           @db.VarChar(Max)
+  MeetingAttendees        String?          @db.VarChar(Max)
+  QuestionAnswer          QuestionAnswer[]
 }
 
 model UserConversation {
@@ -108,6 +111,7 @@ model UserConversation {
   LastSentEvent     DateTime? @db.DateTimeOffset
   DontSendToThis    Boolean   @default(false, map: "DF__UserConve__DontS__4D5F7D71")
   SendOnlyToThis    Boolean   @default(false, map: "DF__UserConve__SendO__4E53A1AA")
+  UserEmail         String?   @db.VarChar(256)
 }
 
 model SubscriptionMeetingUserParticipation {

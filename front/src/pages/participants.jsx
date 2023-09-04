@@ -31,6 +31,7 @@ const Participantes = () => {
 
     const columns = [
         {columnKey: "UserPrincipalName", label: "Nome"},
+        {columnKey: "UserEmail", label: "Email"},
         // {columnKey: "SendOnlyToThis", label: "Somente Para"},
         {columnKey: "DontSendToThis", label: "Enviar Para"},
         {columnKey: "Action", label: ""},
@@ -63,7 +64,7 @@ const Participantes = () => {
                 <div className={"participantSelection"}>
                     <Input
                         className={"participantSearch"}
-                        placeholder={"Nome do participante"}
+                        placeholder={"Nome ou email do participante"}
                         onChange={(ev, data) => setSearchInput(data.value)}
                         contentAfter={<Button appearance={"transparent"} icon={<Search20Regular/>} style={{pointerEvents: "none"}}/>}
                     />
@@ -105,13 +106,19 @@ const Participantes = () => {
                         </TableHeader>
                         <TableBody>
                             {users
-                                .filter((item) => searchInput === "" ? item === item : item.UserPrincipalName.toLowerCase().includes(searchInput.toLowerCase()))
+                                .filter((item) => searchInput === "" ?
+                                    item : item.UserPrincipalName.toLowerCase().includes(searchInput.toLowerCase()) ?
+                                        item : item.UserEmail.toLowerCase().includes(searchInput.toLowerCase())
+                                )
                                 // .filter((item) => filter === "" ? item === item : filter === "sendTo" ? item.SendOnlyToThis : item.DontSendToThis)
                                 .filter((item) => filter === "" ? item : item.DontSendToThis)
                                 .map((item) => (
                                     <TableRow appearance={"neutral"}>
                                         <TableCell className={"tableCellQuestions"}>
                                             {item.UserPrincipalName}
+                                        </TableCell>
+                                        <TableCell className={"tableCellQuestions"}>
+                                            {item.UserEmail}
                                         </TableCell>
                                         {/*<TableCell className={"tableCellQuestions"}>*/}
                                         {/*    {item.SendOnlyToThis ? <Checkmark20Regular/> : <Dismiss20Regular/>}*/}
