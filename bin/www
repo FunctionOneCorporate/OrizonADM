@@ -26,17 +26,26 @@ var server = http.createServer(app);
 
 ViteExpress.config({
   inlineViteConfig: {
-      root: resolve(__dirname, "..", "front"),
-      build: { outDir: "dist" }
+    root: resolve(__dirname, "..", "front"),
+    build: { outDir: "dist" },
   }
 });
 ViteExpress.bind(app, server);
 
 if (
   process.env.NODE_ENV === "production"
-  && !existsSync(resolve(__dirname, "..", "front", "index.html"))
+  && !existsSync(resolve(__dirname, "..", "front", "dist", "index.html"))
 ) {
-  ViteExpress.build().then(() => console.log("Vite Builded successfully"));
+  setTimeout(() => {
+    ViteExpress
+      .build()
+      .then(() => {
+        console.log("Vite Builded successfully");
+        ViteExpress.bind(app, server);
+      })
+      .catch(err => console.log(err));
+  }, 1000);
+} else {
 }
 
 /**
